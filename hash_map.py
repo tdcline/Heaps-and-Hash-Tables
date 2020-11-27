@@ -1,7 +1,7 @@
 # Course: CS261 - Data Structures
 # Assignment: Project 5 - Your Very Own HashMap and MinHeap
 # Student: Tanner Cline
-# Description:
+# Description: 
 
 
 # Import pre-written DynamicArray and LinkedList classes
