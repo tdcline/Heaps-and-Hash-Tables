@@ -60,55 +60,99 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        newArr = DynamicArray()
+        for _ in range(self.capacity):
+            newArr.append(LinkedList())
+        self.size = 0
 
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation
         """
+        if self.contains_key(key):
+            hash_i = self.hash_function(key) % self.capacity
+            node = self.buckets[hash_i].contains(key)
+            if node is not None:
+                return node.value
         return None
 
     def put(self, key: str, value: object) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        hash_i = self.hash_function(key) % self.capacity
+        if self.contains_key(key):
+            for link in self.buckets[hash_i]:
+                if link.key == key:
+                    link.value = value
+        else:
+            self.buckets[hash_i].insert(key, value)
+            self.size += 1
 
     def remove(self, key: str) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        
+        if self.contains_key(key):
+            hash_i = self.hash_function(key) % self.capacity
+            self.buckets[hash_i].remove(key)
+            self.size -= 1
 
     def contains_key(self, key: str) -> bool:
         """
         TODO: Write this implementation
         """
+        hash_i = self.hash_function(key) % self.capacity
+        if self.buckets[hash_i].contains(key):
+            return True
         return False
 
     def empty_buckets(self) -> int:
         """
         TODO: Write this implementation
         """
-        return 0
+        empties = 0
+        for i in range(self.buckets.length()):
+            if self.buckets[i].length() == 0:
+                empties += 1
+        return empties
 
     def table_load(self) -> float:
         """
         TODO: Write this implementation
         """
-        return 0.0
+        return self.size / self.capacity
 
     def resize_table(self, new_capacity: int) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        if new_capacity < 1:
+            return None
+        
+        copyArr = self.buckets
+        old_capacity = self.capacity
+        self.buckets = DynamicArray()
+        self.capacity = new_capacity
+        self.size = 0
+        for _ in range(new_capacity):
+            self.buckets.append(LinkedList())
+        for i in range(old_capacity):
+            for link in copyArr[i]:
+                key = link.key
+                value = link.value
+                self.put(key, value)
 
     def get_keys(self) -> DynamicArray:
         """
         TODO: Write this implementation
         """
-        return DynamicArray()
+        keyArray = DynamicArray()
+        for i in range(self.capacity):
+            for link in self.buckets[i]:
+                keyArray.append(link.key)
+        return keyArray
 
 
 # BASIC TESTING
