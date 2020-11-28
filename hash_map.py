@@ -73,7 +73,8 @@ class HashMap:
         for _ in range(self.capacity):
             newArr.append(LinkedList())
         
-        # reset size
+        # reassign new array to hash table and reset size
+        self.buckets = newArr
         self.size = 0
 
     def get(self, key: str) -> object:
